@@ -1,0 +1,21 @@
+function llamarGPT(prompt) {
+  const apiKey = 'TU_API_KEY_OPENAI';
+  const url = 'https://api.openai.com/v1/chat/completions';
+  const payload = {
+    model: 'gpt-4',
+    messages: [{ role: 'user', content: prompt }],
+    temperature: 0.7
+  };
+  const options = {
+    method: 'post',
+    headers: {
+      Authorization: 'Bearer ' + apiKey,
+      'Content-Type': 'application/json'
+    },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  };
+  const response = UrlFetchApp.fetch(url, options);
+  const result = JSON.parse(response.getContentText());
+  return result.choices[0].message.content;
+}
